@@ -23,8 +23,9 @@ export const useGenreStore = defineStore('genre', () => {
 const genreStore = useGenreStore()
 export default genreStore
 
-const currentGenreId = computed(() => state.currentGenreId);
-
+const setCurrentGenreId = (genreId) => {
+  state.currentGenreId = genreId;
+};
 
 
 
