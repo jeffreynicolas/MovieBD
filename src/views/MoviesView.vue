@@ -73,14 +73,17 @@ const listMovies = async (genreId) => {
   padding: 20px;
   background-color: #101010;
   color: #fff;
+  
 }
 
+/* Hero Title Styles */
 .hero-title {
   font-size: 3rem;
   font-weight: bold;
   margin-bottom: 20px;
 }
 
+/* Genre List Styles */
 .genre-list {
   display: flex;
   justify-content: center;
@@ -104,6 +107,7 @@ const listMovies = async (genreId) => {
   box-shadow: 0 0 0.5rem #387250;
 }
 
+/* Movie List Styles */
 .movie-list {
   display: flex;
   flex-wrap: wrap;
@@ -138,18 +142,25 @@ const listMovies = async (genreId) => {
 }
 
 .movie-title {
-  font-size: 1.5rem;
+  font-size: 0.9rem;
   font-weight: bold;
   line-height: 1.5;
   height: 3.5rem;
   margin-bottom: 0.5rem;
 }
 
+/* Movie Release Date Styles */
 .movie-release-date {
-  color: #aaa;
+
   font-size: 1rem;
+ 
 }
 
+.movie-release-date:hover {
+  color: var(--primary-color);
+}
+
+/* Movie Genres Styles */
 .movie-genres {
   display: flex;
   flex-wrap: wrap;
