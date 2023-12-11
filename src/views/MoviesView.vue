@@ -3,10 +3,14 @@ import { ref, onMounted } from 'vue'
 import Loading from 'vue-loading-overlay'
 import api from '@/plugins/axios'
 import genreStore from '@/stores/genre'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
-const genres = ref([])
+function openMovie(movieId) {
+  router.push({ name: 'MovieDetails', params: { movieId } });
+}
+
 const isLoading = ref(false)
-const getGenreName = (id) => genres.value.find((genre) => genre.id === id).name
 onMounted(async () => {
   isLoading.value = true
   await genreStore.getAllGenres('movie')
@@ -18,6 +22,7 @@ const formatDate = (date) => new Date(date).toLocaleDateString('pt-BR')
 const movies = ref([])
 
 const listMovies = async (genreId) => {
+  genreStore.setCurrentGenreId(genreId);
   isLoading.value = true
   const response = await api.get('discover/movie', {
     params: {
@@ -47,7 +52,11 @@ const listMovies = async (genreId) => {
 
     <div class="movie-list">
       <div v-for="movie in movies" :key="movie.id" class="movie-card">
-        <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" :alt="movie.title" />
+        <img
+  :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`"
+  :alt="movie.title"
+  @click="openMovie(movie.id)"
+/>   
         <div class="movie-details">
           <p class="movie-title">{{ movie.title }}</p>
           <p class="movie-release-date">{{ formatDate(movie.release_date) }}</p>
@@ -76,14 +85,12 @@ const listMovies = async (genreId) => {
   
 }
 
-/* Hero Title Styles */
 .hero-title {
   font-size: 3rem;
   font-weight: bold;
   margin-bottom: 20px;
 }
 
-/* Genre List Styles */
 .genre-list {
   display: flex;
   justify-content: center;
@@ -106,8 +113,6 @@ const listMovies = async (genreId) => {
   background-color: #4e9e5f;
   box-shadow: 0 0 0.5rem #387250;
 }
-
-/* Movie List Styles */
 .movie-list {
   display: flex;
   flex-wrap: wrap;
@@ -148,8 +153,6 @@ const listMovies = async (genreId) => {
   height: 3.5rem;
   margin-bottom: 0.5rem;
 }
-
-/* Movie Release Date Styles */
 .movie-release-date {
 
   font-size: 1rem;
@@ -160,7 +163,6 @@ const listMovies = async (genreId) => {
   color: var(--primary-color);
 }
 
-/* Movie Genres Styles */
 .movie-genres {
   display: flex;
   flex-wrap: wrap;
@@ -184,4 +186,5 @@ const listMovies = async (genreId) => {
   background-color: #455a08;
   box-shadow: 0 0 0.5rem #748708;
 }
+
 </style>
